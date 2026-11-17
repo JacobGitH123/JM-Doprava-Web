@@ -40,9 +40,9 @@ p{margin:0 0 1em;max-width:62ch}
 /* ---------- Header ---------- */
 .top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:32px;height:72px}
-.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none}
-.brand b{font-family:var(--cond);font-weight:800;font-size:38px;letter-spacing:-.02em;color:var(--asphalt);line-height:1}
-.brand span{font-family:var(--cond);font-weight:600;font-size:19px;color:var(--teal-dark);letter-spacing:.02em}
+.brand{display:flex;align-items:center;text-decoration:none;flex:none}
+.brand img{height:50px;width:auto}
+@media (max-width:640px){.brand img{height:40px}}
 .nav{display:flex;gap:26px;margin-left:auto}
 .nav a{text-decoration:none;font-weight:500;font-size:16px;color:var(--muted);padding:6px 0;border-bottom:2px solid transparent}
 .nav a:hover{color:var(--ink);border-color:var(--teal)}
@@ -222,7 +222,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#uvod" aria-label="JM doprava – úvod"><b>JM</b><span>doprava</span></a>
+    <a class="brand" href="#uvod" aria-label="JM doprava – úvod"><img src="img/logo.png" alt="JM doprava" width="817" height="324"></a>
     <nav class="nav" id="nav" aria-label="Hlavní menu">
       <a href="#sluzby">Služby</a>
       <a href="#proc-my">Proč my</a>
