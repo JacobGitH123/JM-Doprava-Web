@@ -3,508 +3,653 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>JM doprava – autobusová a nákladní doprava, Most</title>
-<meta name="description" content="JM doprava s.r.o. z Mostu – pravidelná i nepravidelná přeprava 15 až 60 osob, nákladní doprava a expresní zásilky po celé EU. Nonstop, náhradní vůz do 60 minut.">
+<title>JM doprava – autobusová doprava z Mostu, nonstop</title>
+<meta name="description" content="JM doprava s.r.o. z Mostu: autobusová doprava pro firmy, školy a sportovní kluby. 15 až 60 míst, celá EU, nonstop dispečink a náhradní vůz do 60 minut.">
+<meta name="theme-color" content="#0F1B26">
+<link rel="icon" href="img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#1C2326;
-  --asphalt:#2F373B;
-  --muted:#5B666B;
-  --line:#D9E1E3;
-  --sky:#EEF3F4;
-  --white:#FFFFFF;
-  --teal:#23A99E;      /* tyrkys z polepu autobusů */
-  --teal-dark:#167A72;
-  --blue:#2B44C4;      /* modrá „vlna" z polepu */
-  --radius-lg:22px;
-  --radius-sm:10px;
-  --wrap:1200px;
+  --night:#0F1B26;
+  --night-2:#182836;
+  --ink:#16222B;
+  --muted:#5A6870;
+  --line:#DCE4E6;
+  --mist:#EEF3F4;
+  --white:#fff;
+  --teal:#2BB5A9;
+  --teal-d:#157A72;
+  --teal-l:#A6ECE4;
+  --blue:#2B44C4;
   --cond:"Barlow Condensed","Arial Narrow",sans-serif;
   --body:"Barlow",system-ui,sans-serif;
+  --wrap:1240px;
+  --r:20px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
-body{margin:0;font-family:var(--body);font-size:18px;line-height:1.6;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;font:400 18px/1.6 var(--body);color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit}
-:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
-.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
-h1,h2,h3{font-family:var(--cond);line-height:.98;margin:0;letter-spacing:-.01em}
-h2{font-size:clamp(40px,5.2vw,68px);font-weight:800;text-transform:uppercase}
-h3{font-size:28px;font-weight:700}
-p{margin:0 0 1em;max-width:62ch}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 32px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1,h2,h3{font-family:var(--cond);margin:0;line-height:.95;letter-spacing:-.01em}
+h2{font-size:clamp(44px,6vw,84px);font-weight:800;text-transform:uppercase}
+h3{font-size:30px;font-weight:700;line-height:1}
+p{margin:0 0 1em;max-width:60ch}
 
-/* ---------- Header ---------- */
-.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:32px;height:72px}
-.brand{display:flex;align-items:center;text-decoration:none;flex:none}
-.brand img{height:50px;width:auto}
-@media (max-width:640px){.brand img{height:40px}}
-.nav{display:flex;gap:26px;margin-left:auto}
-.nav a{text-decoration:none;font-weight:500;font-size:16px;color:var(--muted);padding:6px 0;border-bottom:2px solid transparent}
-.nav a:hover{color:var(--ink);border-color:var(--teal)}
-.call{display:flex;flex-direction:column;align-items:flex-end;text-decoration:none;line-height:1.1;padding:8px 16px;border-radius:999px;background:var(--ink);color:#fff}
-.call small{font-size:12px;color:#9FE3DC;font-weight:600}
-.call strong{font-family:var(--cond);font-size:21px;font-weight:700;letter-spacing:.02em}
-.call:hover{background:var(--blue)}
-.menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font:600 15px var(--body);color:var(--ink);cursor:pointer}
+/* ===== Navigace ===== */
+.nav{position:fixed;inset:0 0 auto;z-index:60;transition:background .3s,box-shadow .3s}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:78px}
+.logo{flex:none;display:block;position:relative;height:48px}
+.logo img{height:48px;width:auto;transition:opacity .3s}
+.logo .dark{position:absolute;inset:0;opacity:0}
+.links{display:flex;gap:28px;margin-left:auto}
+.links a{text-decoration:none;font-weight:600;font-size:16px;color:rgba(255,255,255,.85);padding:6px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.links a:hover{color:#fff;border-color:var(--teal)}
+.phone-pill{display:flex;align-items:center;gap:10px;text-decoration:none;padding:9px 18px 9px 12px;border-radius:999px;background:var(--teal);color:var(--night);font-family:var(--cond);font-weight:700;font-size:21px;letter-spacing:.02em;transition:background .2s}
+.phone-pill:hover{background:#fff}
+.phone-pill i{width:9px;height:9px;border-radius:50%;background:var(--night);box-shadow:0 0 0 0 rgba(15,27,38,.5);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(15,27,38,0)}}
+.burger{display:none;margin-left:auto;background:none;border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:999px;padding:8px 16px;font-weight:600;cursor:pointer}
+.nav.solid{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
+.nav.solid .logo .light{opacity:0}.nav.solid .logo .dark{opacity:1}
+.nav.solid .links a{color:var(--muted)}.nav.solid .links a:hover{color:var(--ink)}
+.nav.solid .burger{color:var(--ink);border-color:var(--line)}
+.nav.solid .phone-pill{background:var(--night);color:#fff}
+.nav.solid .phone-pill i{background:var(--teal)}
+.nav.solid .phone-pill:hover{background:var(--blue)}
 
-/* ---------- Hero ---------- */
-.hero{padding:64px 0 0;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:center}
-.hero .kicker{font-weight:600;color:var(--teal-dark);margin-bottom:18px;font-size:17px}
-.hero h1{font-size:clamp(54px,7.4vw,108px);font-weight:800;text-transform:uppercase;color:var(--ink)}
-.hero h1 .row{display:block}
-.hero .lead{font-size:20px;color:var(--muted);margin:26px 0 34px;max-width:34ch}
-.ctas{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:600 17px var(--body);padding:15px 26px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
-.btn-primary{background:var(--teal-dark);color:#fff}
-.btn-primary:hover{background:var(--blue)}
-.btn-ghost{border-color:var(--ink);color:var(--ink);background:transparent}
-.btn-ghost:hover{background:var(--ink);color:#fff}
-.hero-photo{position:relative;margin-right:-28px}
-.hero-photo img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius-lg) 0 0 var(--radius-lg)}
-.badge{position:absolute;left:-28px;bottom:-26px;background:#fff;border-radius:16px;padding:16px 20px;box-shadow:0 18px 40px -18px rgba(28,35,38,.45);display:flex;gap:14px;align-items:center;max-width:300px}
-.badge .dot{flex:none;width:14px;height:14px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 6px rgba(35,169,158,.18);animation:pulse 2.4s infinite}
-.badge p{margin:0;font-size:15px;line-height:1.35}
-.badge b{display:block;font-family:var(--cond);font-size:21px;line-height:1.1}
-@keyframes pulse{50%{box-shadow:0 0 0 11px rgba(35,169,158,0)}}
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;background:var(--night);overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:60% 50%;transform:scale(1.08);animation:drift 22s ease-out forwards}
+@keyframes drift{to{transform:scale(1)}}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(90deg,rgba(15,27,38,.92) 0%,rgba(15,27,38,.72) 38%,rgba(15,27,38,.15) 75%),
+  linear-gradient(0deg,rgba(15,27,38,.95) 0%,rgba(15,27,38,0) 45%)}
+.hero-inner{padding-top:140px;padding-bottom:40px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:16px;color:var(--teal-l);margin-bottom:22px}
+.eyebrow i{width:28px;height:2px;background:var(--teal)}
+.hero h1{font-size:clamp(56px,8.6vw,132px);font-weight:800;text-transform:uppercase;line-height:.9}
+.hero h1 .l1{display:block;animation:rise .9s cubic-bezier(.2,.7,.2,1) .1s both}
 
-/* ---------- Linka (podpisový prvek) ---------- */
-.route{margin-top:96px;padding:0 0 72px}
-.route-line{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;list-style:none;margin:0;padding:34px 0 0}
-.route-line::before{content:"";position:absolute;left:0;right:0;top:9px;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--teal),var(--blue));transform-origin:left;animation:draw 1.2s cubic-bezier(.6,.05,.25,1) .2s both}
-.route-line li{position:relative;padding-right:8px;animation:stop .5s ease-out both}
-.route-line li::before{content:"";position:absolute;top:-34px;left:0;width:24px;height:24px;border-radius:50%;background:#fff;border:6px solid var(--ink)}
-.route-line li:nth-child(1){animation-delay:.3s}.route-line li:nth-child(2){animation-delay:.5s}.route-line li:nth-child(3){animation-delay:.7s}.route-line li:nth-child(4){animation-delay:.9s}.route-line li:nth-child(5){animation-delay:1.1s}
-.route-line strong{display:block;font-family:var(--cond);font-weight:700;font-size:26px;line-height:1.05;margin-top:10px}
-.route-line span{font-size:15px;color:var(--muted)}
-@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@keyframes stop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* Split-flap tabule */
+.board{display:flex;gap:clamp(3px,.45vw,6px);margin-top:clamp(10px,1.2vw,16px);animation:rise .9s cubic-bezier(.2,.7,.2,1) .3s both}
+.flap{position:relative;width:clamp(26px,5.6vw,82px);height:clamp(40px,8.2vw,120px);border-radius:clamp(4px,.6vw,9px);background:linear-gradient(180deg,#1E2E3B 0 50%,#172531 50% 100%);box-shadow:inset 0 -2px 0 rgba(0,0,0,.35),0 10px 24px -12px rgba(0,0,0,.6);display:grid;place-items:center;overflow:hidden;perspective:300px}
+.flap::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:rgba(5,12,18,.85)}
+.flap span{font-family:var(--cond);font-weight:700;font-size:clamp(30px,6.4vw,96px);line-height:1;color:#F3F7F8;transform-origin:50% 50%}
+.flap.blank{background:linear-gradient(180deg,#19283404 0 50%,#14212c04 50% 100%);box-shadow:none;border:1px dashed rgba(255,255,255,.08)}
+.flap.blank::after{display:none}
+.flap.tick span{animation:flip .09s linear}
+.flap.accent span{color:var(--teal-l)}
+@keyframes flip{0%{transform:scaleY(1)}50%{transform:scaleY(.1);filter:brightness(.6)}100%{transform:scaleY(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 
-/* ---------- Služby ---------- */
-.section{padding:110px 0}
-.services{background:var(--sky)}
-.head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:end;margin-bottom:56px}
-.head p{color:var(--muted);margin:0}
-.svc{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:24px}
-.card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column}
-.card img{width:100%;aspect-ratio:4/3;object-fit:cover}
-.card .body{padding:26px 28px 30px}
-.card h3{margin-bottom:12px}
-.card p{font-size:16.5px;color:var(--muted);margin:0 0 14px}
-.card ul{margin:0;padding:0;list-style:none;font-size:16px}
-.card li{padding:7px 0;border-top:1px solid var(--line)}
-.card.big{grid-row:span 1}
-.card.big img{aspect-ratio:auto;height:300px}
-.price-note{margin-top:28px;font-size:16px;color:var(--muted)}
-.price-note b{color:var(--ink)}
+.hero-lead{font-size:clamp(18px,1.6vw,21px);color:rgba(255,255,255,.82);max-width:46ch;margin:30px 0 34px;animation:rise .9s cubic-bezier(.2,.7,.2,1) .5s both}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;animation:rise .9s cubic-bezier(.2,.7,.2,1) .6s both}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;font:700 17px var(--body);padding:16px 28px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.btn:active{transform:scale(.98)}
+.btn-teal{background:var(--teal);color:var(--night)}
+.btn-teal:hover{background:#fff}
+.btn-line{border-color:rgba(255,255,255,.55);color:#fff;background:transparent}
+.btn-line:hover{background:#fff;color:var(--night);border-color:#fff}
+.btn-dark{background:var(--night);color:#fff}
+.btn-dark:hover{background:var(--blue)}
+.btn-outline{border-color:var(--ink);color:var(--ink);background:transparent}
+.btn-outline:hover{background:var(--ink);color:#fff}
 
-/* ---------- Záruky ---------- */
-.promise{background:var(--asphalt);color:#fff}
-.promise-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:72px}
-.promise h2{color:#fff}
-.promise .claim{font-family:var(--cond);font-size:clamp(30px,3.4vw,44px);font-weight:600;line-height:1.08;margin:28px 0 22px;color:#9FE3DC}
-.promise .claim-sub{color:#C9D2D5}
-.groups{display:grid;grid-template-columns:1fr 1fr;gap:42px 40px}
-.group h3{font-size:24px;color:#fff;padding-bottom:12px;border-bottom:2px solid var(--teal);margin-bottom:14px}
-.group ul{list-style:none;margin:0;padding:0}
-.group li{color:#D5DDE0;font-size:16.5px;padding:6px 0 6px 22px;position:relative;line-height:1.45}
-.group li::before{content:"";position:absolute;left:0;top:14px;width:9px;height:9px;border-radius:50%;border:2px solid var(--teal)}
+.facts{border-top:1px solid rgba(255,255,255,.14);margin-top:64px;display:grid;grid-template-columns:repeat(4,1fr);animation:rise .9s cubic-bezier(.2,.7,.2,1) .75s both}
+.facts div{padding:22px 24px 4px 0}
+.facts div+div{padding-left:24px;border-left:1px solid rgba(255,255,255,.14)}
+.facts b{display:block;font-family:var(--cond);font-weight:700;font-size:clamp(26px,2.4vw,34px);line-height:1.05}
+.facts span{font-size:15px;color:rgba(255,255,255,.65)}
 
-/* ---------- Vozy / galerie ---------- */
-.gallery{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:170px;gap:14px}
-.gallery button{padding:0;border:0;border-radius:var(--radius-sm);overflow:hidden;cursor:zoom-in;background:var(--sky)}
-.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.gallery button:hover img{transform:scale(1.04)}
-.g1{grid-column:span 4;grid-row:span 2}.g2{grid-column:span 2;grid-row:span 2}
-.g3,.g4,.g5{grid-column:span 2;grid-row:span 1}
-.g6{grid-column:span 3;grid-row:span 2}.g7{grid-column:span 3;grid-row:span 2}
-.lightbox{position:fixed;inset:0;z-index:100;background:rgba(20,25,27,.92);display:none;align-items:center;justify-content:center;padding:4vw}
-.lightbox.open{display:flex;animation:fade .2s}
-.lightbox img{max-height:86vh;border-radius:var(--radius-sm)}
-.lightbox button{position:absolute;top:20px;right:24px;background:#fff;border:0;border-radius:999px;padding:10px 18px;font:600 15px var(--body);cursor:pointer}
-@keyframes fade{from{opacity:0}}
+/* ===== Pro koho ===== */
+.sec{padding:130px 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:end;margin-bottom:56px}
+.sec-head p{color:var(--muted);margin:0}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:260px;gap:16px}
+.tile{position:relative;border-radius:var(--r);overflow:hidden;color:#fff;background:var(--night);isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;padding:30px}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.tile::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(15,27,38,.9) 0%,rgba(15,27,38,.35) 55%,rgba(15,27,38,.05) 100%)}
+.tile:hover img{transform:scale(1.05)}
+.tile h3{font-size:clamp(30px,3vw,42px);text-transform:uppercase;font-weight:800}
+.tile p{margin:10px 0 0;color:rgba(255,255,255,.8);font-size:16.5px;max-width:40ch}
+.t1{grid-column:span 7;grid-row:span 2}
+.t2{grid-column:span 5;grid-row:span 1}
+.t3{grid-column:span 5;grid-row:span 1}
+.t4{grid-column:span 12;grid-row:span 1;background:var(--mist);color:var(--ink);flex-direction:row;align-items:center;justify-content:space-between;gap:32px}
+.t4::before{display:none}
+.t4 h3{font-size:clamp(30px,3vw,42px)}
+.t4 p{color:var(--muted)}
+.t4 .cargo{display:flex;gap:28px;align-items:center}
+.t4 .cargo img{position:static;width:220px;height:150px;border-radius:14px;flex:none}
+.t4 .cargo div{max-width:52ch}
 
-/* ---------- Elektromobilita ---------- */
-.ev{background:var(--sky)}
-.ev-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:64px;align-items:center}
-.ev-photo{position:relative}
-.ev-photo img{border-radius:var(--radius-lg);width:100%;aspect-ratio:3/2;object-fit:cover}
-.odo{position:absolute;right:-18px;bottom:28px;background:var(--ink);color:#fff;border-radius:14px;padding:14px 20px;font-family:var(--cond)}
-.odo b{display:block;font-size:40px;line-height:1;letter-spacing:.04em;color:#9FE3DC}
-.odo span{font-size:16px;font-weight:500}
-.ev h2{margin-bottom:24px}
-.ev p{color:var(--muted)}
-details{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;font-size:15.5px}
-summary{cursor:pointer;font-weight:600;color:var(--teal-dark)}
-details dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:16px 0 0}
+/* ===== 60 minut ===== */
+.promise{background:var(--night);color:#fff;position:relative;overflow:hidden}
+.promise::after{content:"";position:absolute;right:-180px;top:-180px;width:620px;height:620px;border-radius:50%;border:2px solid rgba(43,181,169,.16);box-shadow:0 0 0 80px rgba(43,181,169,.035),0 0 0 160px rgba(43,181,169,.025)}
+.promise-top{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end;position:relative;z-index:1}
+.big-claim{font-family:var(--cond);font-weight:800;text-transform:uppercase;font-size:clamp(46px,6.4vw,96px);line-height:.92;margin:0}
+.big-claim em{font-style:normal;color:var(--teal)}
+.promise-top p{color:rgba(255,255,255,.72)}
+.promise-top .big-claim{color:#fff}
+.guar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:90px;position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.14)}
+.guar div{padding:30px 28px 0 0}
+.guar div+div{padding-left:28px;border-left:1px solid rgba(255,255,255,.14)}
+.guar h3{font-size:26px;margin-bottom:14px;color:var(--teal-l)}
+.guar ul{list-style:none;margin:0;padding:0}
+.guar li{font-size:16px;color:rgba(255,255,255,.78);padding:5px 0;line-height:1.45}
+
+/* ===== Kolik vás jede ===== */
+.seats-sec{background:var(--mist)}
+.seats-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:72px;align-items:center}
+.count{font-family:var(--cond);font-weight:800;font-size:clamp(110px,14vw,200px);line-height:.8;color:var(--night);font-variant-numeric:tabular-nums;margin:30px 0 4px}
+.count small{font-size:.28em;font-weight:700;color:var(--muted);margin-left:10px;letter-spacing:0}
+.vehicle{font-family:var(--cond);font-size:28px;font-weight:700;color:var(--teal-d);min-height:1.2em;margin-bottom:26px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:10px;background:linear-gradient(90deg,var(--teal) var(--p,0%),#CCD7DA var(--p,0%));outline:none;margin:6px 0 10px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:var(--night);border:5px solid #fff;box-shadow:0 4px 14px rgba(15,27,38,.35);cursor:grab}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--night);border:5px solid #fff;box-shadow:0 4px 14px rgba(15,27,38,.35);cursor:grab}
+.range-scale{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:30px}
+/* půdorys autobusu */
+.bus{position:relative;background:#fff;border-radius:60px 30px 30px 60px;padding:34px 40px 34px 110px;box-shadow:0 30px 60px -30px rgba(15,27,38,.35);border:2px solid var(--line)}
+.bus::before{content:"";position:absolute;left:24px;top:50%;width:56px;height:56px;margin-top:-28px;border-radius:50%;border:6px solid var(--night);opacity:.9}
+.bus::after{content:"řidič";position:absolute;left:24px;top:calc(50% + 36px);width:56px;text-align:center;font-size:12px;color:var(--muted);font-weight:600}
+.bus .door{position:absolute;left:100px;bottom:-2px;width:46px;height:6px;background:var(--teal);border-radius:4px}
+.seatmap{display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(2,1fr) 18px repeat(2,1fr);grid-auto-flow:column;gap:7px}
+.seat{aspect-ratio:1/1.05;border-radius:7px 7px 5px 5px;background:var(--mist);border:2px solid #D3DDE0;transition:background .25s,border-color .25s,transform .25s}
+.seat.on{background:var(--teal);border-color:var(--teal-d);transform:translateY(-2px)}
+.aisle{grid-row:3}
+.legend{display:flex;gap:22px;margin-top:18px;font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:7px;background:var(--teal)}
+.legend i.off{background:var(--mist);border:2px solid #D3DDE0}
+
+/* ===== Vozy ===== */
+.fleet-head{display:flex;justify-content:space-between;align-items:end;gap:32px;margin-bottom:44px}
+.arrows{display:flex;gap:10px}
+.arrows button{width:54px;height:54px;border-radius:50%;border:2px solid var(--ink);background:#fff;cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+.arrows button:hover{background:var(--ink);color:#fff}
+.arrows svg{width:20px;height:20px}
+.rail{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 max(32px,calc((100vw - var(--wrap))/2 + 32px)) 20px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.slide{flex:none;width:min(720px,82vw);scroll-snap-align:center;margin:0}
+.slide img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r)}
+.slide figcaption{display:flex;justify-content:space-between;gap:16px;padding:16px 4px 0;font-size:16px;color:var(--muted)}
+.slide figcaption b{color:var(--ink);font-family:var(--cond);font-size:24px;font-weight:700}
+
+/* ===== Elektro ===== */
+.ev{padding:0 0 130px}
+.ev-card{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);border-radius:28px;overflow:hidden;background:var(--mist)}
+.ev-card .pic{position:relative;min-height:440px}
+.ev-card .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.odo{position:absolute;left:24px;bottom:24px;display:flex;gap:3px;align-items:flex-end}
+.odo span{background:var(--night);color:#fff;font-family:var(--cond);font-weight:700;font-size:38px;line-height:1;padding:8px 9px;border-radius:7px;font-variant-numeric:tabular-nums}
+.odo em{font-style:normal;color:#fff;background:var(--teal-d);font-family:var(--cond);font-weight:700;font-size:20px;padding:6px 10px;border-radius:7px;margin-left:6px}
+.ev-card .txt{padding:56px 56px 50px}
+.ev-card h2{font-size:clamp(40px,4.4vw,62px);margin-bottom:22px}
+.ev-card p{color:var(--muted);font-size:17px}
+details{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;font-size:15px}
+summary{cursor:pointer;font-weight:700;color:var(--teal-d)}
+details dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:14px 0 0}
 details dt{font-weight:600}
 details dd{margin:0;color:var(--muted)}
 
-/* ---------- Poptávka + kontakt ---------- */
-.contact-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:64px}
-.steps{list-style:none;margin:28px 0 40px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
-.steps li{counter-increment:s;font-size:15.5px;color:var(--muted);line-height:1.4}
-.steps li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink);color:#fff;font:700 18px var(--cond);margin-bottom:10px}
-.steps b{display:block;color:var(--ink);font-size:16.5px}
-form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-label{display:flex;flex-direction:column;gap:6px;font-size:14.5px;font-weight:600}
-label.full{grid-column:1/-1}
-input,select,textarea{font:400 17px var(--body);color:var(--ink);padding:13px 14px;border:1.5px solid var(--line);border-radius:var(--radius-sm);background:#fff;width:100%}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal-dark);box-shadow:0 0 0 4px rgba(35,169,158,.18)}
-textarea{min-height:110px;resize:vertical}
-.form-actions{grid-column:1/-1;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.form-actions small{color:var(--muted);font-size:14px}
-.result{grid-column:1/-1;display:none;background:var(--sky);border-radius:var(--radius-sm);padding:20px 22px;font-size:15.5px}
-.result.show{display:block;animation:fade .25s}
-.result pre{white-space:pre-wrap;font:inherit;margin:10px 0 14px}
-.result .row{display:flex;gap:10px;flex-wrap:wrap}
-.result .btn{padding:10px 18px;font-size:15px}
-.contact-card{background:var(--ink);color:#fff;border-radius:var(--radius-lg);padding:40px 38px;align-self:start;position:sticky;top:100px}
-.contact-card h3{font-size:32px;margin-bottom:22px}
-.contact-card .phone{display:block;font-family:var(--cond);font-weight:700;font-size:44px;line-height:1;color:#9FE3DC;text-decoration:none;margin-bottom:6px}
-.contact-card .mail{display:inline-block;color:#fff;font-size:18px;margin-bottom:28px}
-.contact-card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 22px;font-size:16px;border-top:1px solid rgba(255,255,255,.14);padding-top:24px}
-.contact-card dt{color:#93A1A6}
-.contact-card dd{margin:0}
-.contact-card .map{display:inline-block;margin-top:24px;color:#9FE3DC;font-weight:600}
-.open-now{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;background:rgba(159,227,220,.12);color:#9FE3DC;padding:6px 12px;border-radius:999px;margin-bottom:18px}
-.open-now i{width:8px;height:8px;border-radius:50%;background:#4BE0A4}
+/* ===== Poptávka ===== */
+.order{background:var(--night);color:#fff;padding:130px 0}
+.order-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:72px}
+.order h2{color:#fff}
+.order .intro{color:rgba(255,255,255,.72);margin:24px 0 40px}
+.steps{list-style:none;padding:0;margin:0 0 44px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:16px 0;border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:16px;line-height:1.45}
+.steps li::before{content:counter(s);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(43,181,169,.16);color:var(--teal-l);font:700 20px var(--cond)}
+.steps b{display:block;color:#fff;font-size:17px}
+.direct{border-radius:var(--r);background:var(--night-2);padding:28px 30px}
+.direct small{display:block;color:rgba(255,255,255,.6);font-size:14px;margin-bottom:6px}
+.direct a.tel{display:block;font-family:var(--cond);font-weight:700;font-size:clamp(34px,3.3vw,48px);line-height:1;color:var(--teal-l);text-decoration:none;margin-bottom:8px;white-space:nowrap}
+.direct a.mail{color:#fff;font-size:17px}
+.reach{background:#fff;color:var(--ink);border-radius:28px;padding:48px;min-width:0}
+.open.dark{margin:0 0 26px;color:var(--teal-d)}
+.reach-label{margin:0 0 4px;color:var(--muted);font-size:16px}
+.reach-tel{display:block;font-family:var(--cond);font-weight:800;font-size:clamp(40px,4.4vw,64px);line-height:1;color:var(--night);text-decoration:none;margin-bottom:22px;white-space:nowrap}
+.reach-tel:hover{color:var(--teal-d)}
+.reach-mail{display:inline-block;font-family:var(--cond);font-weight:700;font-size:clamp(26px,2.6vw,36px);color:var(--teal-d);text-decoration:none;border-bottom:2px solid currentColor;line-height:1.15;word-break:break-all}
+.reach-tip{margin:34px 0 30px;padding:24px 26px;border-radius:16px;background:var(--mist)}
+.reach-tip b{font-family:var(--cond);font-size:22px}
+.reach-tip ul{margin:10px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;font-size:16px;color:var(--muted)}
+.reach-tip li{padding-left:18px;position:relative}
+.reach-tip li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--teal)}
+.reach-btns{display:flex;gap:12px;flex-wrap:wrap}
 
-footer{border-top:1px solid var(--line);padding:34px 0;font-size:14.5px;color:var(--muted)}
-footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+/* ===== Patička ===== */
+footer{background:#0A141C;color:rgba(255,255,255,.7);padding:90px 0 40px;font-size:15.5px}
+.foot-top{display:grid;grid-template-columns:minmax(0,5fr) repeat(3,minmax(0,2fr));gap:40px;padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,.1)}
+.foot-top img{height:64px;width:auto;margin-bottom:20px}
+.foot-top h4{font:700 20px var(--cond);color:#fff;margin:0 0 12px;letter-spacing:.02em}
+.foot-top p{margin:0;line-height:1.7}
+.foot-top a{color:#fff;text-decoration:none}
+.foot-top a:hover{color:var(--teal-l)}
+.open{display:inline-flex;align-items:center;gap:8px;color:var(--teal-l);font-weight:600;margin-top:14px}
+.open i{width:8px;height:8px;border-radius:50%;background:#4BE0A4;animation:ping2 2s infinite}
+@keyframes ping2{70%{box-shadow:0 0 0 7px rgba(75,224,164,0)}0%{box-shadow:0 0 0 0 rgba(75,224,164,.5)}}
+.foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:28px;font-size:14px;color:rgba(255,255,255,.45)}
 
-/* ---------- Responsive ---------- */
-@media (max-width:1000px){
-  .hero-grid,.head,.promise-grid,.ev-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
-  .hero-photo{margin-right:0}.hero-photo img{border-radius:var(--radius-lg)}
-  .badge{left:16px}
-  .svc{grid-template-columns:1fr 1fr}.card.big{grid-column:1/-1}
-  .route-line{grid-template-columns:repeat(3,1fr);row-gap:56px}
-  .route-line::before{display:none}
-  .route-line li::before{border-color:var(--teal-dark)}
-  .contact-card{position:static}
-  .odo{right:16px}
+/* ===== Lightbox ===== */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(10,20,28,.94);display:none;align-items:center;justify-content:center;padding:4vw}
+.lb.open{display:flex;animation:rise .25s ease-out}
+.lb img{max-height:86vh;border-radius:14px}
+.lb button{position:absolute;top:20px;right:24px;background:#fff;border:0;border-radius:999px;padding:10px 18px;font-weight:700;cursor:pointer}
+.slide button{all:unset;cursor:zoom-in;display:block;border-radius:var(--r)}
+.slide button:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+
+/* ===== Responsivita ===== */
+@media (max-width:1080px){
+  .sec-head,.promise-top,.seats-grid,.order-grid,.ev-card{grid-template-columns:minmax(0,1fr);gap:40px}
+  .guar{grid-template-columns:1fr 1fr;row-gap:36px}
+  .guar div:nth-child(3){padding-left:0;border-left:0}
+  .t1{grid-column:span 12}.t2,.t3{grid-column:span 6}
+  .ev-card .pic{min-height:340px}
+  .foot-top{grid-template-columns:1fr 1fr}
 }
-@media (max-width:820px){
-  .nav{display:none;position:absolute;top:72px;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:8px 28px 18px;border-bottom:1px solid var(--line)}
-  .nav.open{display:flex}
-  .nav a{padding:12px 0;font-size:18px}
-  .menu-btn{display:block}
-  .call{padding:7px 14px}.call small{display:none}.call strong{font-size:18px}
-  .top .wrap{gap:12px}
+@media (max-width:860px){
+  .links{display:none;position:absolute;top:78px;left:0;right:0;flex-direction:column;gap:0;background:#fff;padding:10px 32px 22px;box-shadow:0 20px 30px -20px rgba(0,0,0,.3)}
+  .links.open{display:flex}
+  .links a,.nav.solid .links a{color:var(--ink);font-size:19px;padding:13px 0}
+  .burger{display:block}
+  .nav .wrap{gap:12px}
+  .phone-pill span{display:none}
+  .phone-pill{padding:11px}
+  .phone-pill::after{content:"Zavolat";font-size:18px}
+  .facts{grid-template-columns:1fr 1fr}
+  .facts div:nth-child(3){padding-left:0;border-left:0}
+  .t4{flex-direction:column;align-items:flex-start}
+  .t4 .cargo{flex-direction:column;align-items:flex-start}
 }
 @media (max-width:640px){
   body{font-size:17px}
   .wrap{padding:0 20px}
-  .hero{padding-top:40px}
-  .section{padding:80px 0}
-  .svc,.groups,form,.steps{grid-template-columns:1fr}
-  .route-line{grid-template-columns:1fr 1fr}
-  .gallery{grid-template-columns:1fr 1fr;grid-auto-rows:140px}
-  .gallery button{grid-column:span 1!important;grid-row:span 1!important}
-  .gallery .g1{grid-column:span 2!important;grid-row:span 2!important}
-  .contact-card{padding:30px 24px}
-  .contact-card .phone{font-size:36px}
-  .call strong{font-size:0}.call strong::after{content:"Zavolat";font-size:17px}
+  .sec,.order{padding:90px 0}
+  .ev{padding-bottom:90px}
+  .logo,.logo img{height:38px}
+  .hero-inner{padding-top:120px}
+  .bento{grid-auto-rows:240px}
+  .t2,.t3{grid-column:span 12}
+  .t4{grid-row:span 2}
+  .guar{grid-template-columns:1fr}
+  .guar div,.guar div+div{padding-left:0;border-left:0}
+  .bus{padding:22px 18px 22px 62px;border-radius:36px 20px 20px 36px}
+  .bus::before{left:12px;width:36px;height:36px;margin-top:-18px;border-width:5px}
+  .bus::after{left:8px;width:44px;top:calc(50% + 22px);font-size:11px}
+  .bus .door{left:58px;width:30px}
+  .seatmap{gap:3px;grid-template-rows:repeat(2,1fr) 10px repeat(2,1fr)}
+  .seat{border-radius:4px;border-width:1.5px}
+  .reach{padding:30px 22px}
+  .reach-tel{font-size:calc((100vw - 84px)/8.4)}
+  .reach-mail{font-size:calc((100vw - 84px)/13.5)}
+  .reach-tip ul{grid-template-columns:1fr}
+  .ev-card .txt{padding:34px 24px}
+  .foot-top{grid-template-columns:1fr}
+  .fleet-head .arrows{display:none}
+  .rail{padding:0 20px 20px}
+  .flap{width:calc((100vw - 40px - 27px)/10);height:calc((100vw - 40px - 27px)/10*1.45)}
+  .flap span{font-size:calc((100vw - 40px - 27px)/10*1.1)}
+  .slide figcaption{flex-direction:column;gap:0}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
+  .hero-bg img{transform:none}
 }
 </style>
 </head>
 <body>
 
-<header class="top">
+<header class="nav" id="nav">
   <div class="wrap">
-    <a class="brand" href="#uvod" aria-label="JM doprava – úvod"><img src="img/logo.png" alt="JM doprava" width="817" height="324"></a>
-    <nav class="nav" id="nav" aria-label="Hlavní menu">
-      <a href="#sluzby">Služby</a>
-      <a href="#proc-my">Proč my</a>
+    <a class="logo" href="#uvod" aria-label="JM doprava – úvod">
+      <img class="light" src="img/logo-bila.png" alt="JM doprava" width="817" height="324">
+      <img class="dark" src="img/logo.png" alt="" width="817" height="324">
+    </a>
+    <nav class="links" id="links" aria-label="Hlavní menu">
+      <a href="#pro-koho">Pro koho jezdíme</a>
+      <a href="#zaruky">Záruky</a>
       <a href="#vozy">Vozy</a>
-      <a href="#elektromobilita">Elektromobilita</a>
+      <a href="#poptavka">Objednat</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
-    <button class="menu-btn" aria-controls="nav" aria-expanded="false">Menu</button>
-    <a class="call" href="tel:+420608694190"><small>Nonstop linka</small><strong>+420 608 694 190</strong></a>
+    <button class="burger" aria-controls="links" aria-expanded="false">Menu</button>
+    <a class="phone-pill" href="tel:+420608694190" aria-label="Zavolat dispečink +420 608 694 190"><i aria-hidden="true"></i><span>608 694 190</span></a>
   </div>
 </header>
 
 <main id="uvod">
-  <section class="hero">
-    <div class="wrap">
-      <div class="hero-grid">
-        <div>
-          <p class="kicker">Autobusová a nákladní doprava z Mostu</p>
-          <h1><span class="row">Vezeme lidi</span><span class="row">i náklad.</span><span class="row">Po celé EU.</span></h1>
-          <p class="lead">Okamžitě zajistíme přepravu 15 až 60 osob na trasách, které si vyberete. Pravidelně i jednorázově, ve dne i v noci.</p>
-          <div class="ctas">
-            <a class="btn btn-primary" href="#poptavka">Poptat dopravu</a>
-            <a class="btn btn-ghost" href="tel:+420608694190">Zavolat dispečink</a>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg"><img src="img/autobus-jizda.jpg" alt="" width="800" height="533"></div>
+  <div class="wrap hero-inner">
+    <p class="eyebrow"><i aria-hidden="true"></i>Autobusová doprava z Mostu, nonstop</p>
+    <h1>
+      <span class="l1">Odvezeme vás</span>
+      <span class="sr" id="dest-sr">kamkoli v Evropě</span>
+      <span class="board" id="board" aria-hidden="true"></span>
+    </h1>
+    <p class="hero-lead">Okamžitě zajistíme přepravu 15 až 60 lidí na trasách, které si vyberete. Pro firmy, školy i sportovní kluby, pravidelně i jednorázově, po Česku i celé EU.</p>
+    <div class="ctas">
+      <a class="btn btn-teal" href="#poptavka">Objednat autobus</a>
+      <a class="btn btn-line" href="tel:+420608694190">Zavolat +420 608 694 190</a>
+    </div>
+    <div class="facts">
+      <div><b>Nonstop</b><span>dispečink 24/7, i o svátcích</span></div>
+      <div><b>15–60 míst</b><span>mikrobusy i velké autobusy</span></div>
+      <div><b>Do 60 minut</b><span>náhradní vůz při poruše</span></div>
+      <div><b>20 let</b><span>zkušeností v dopravě</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRO KOHO ============ -->
+<section class="sec" id="pro-koho">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Pro koho jezdíme</h2>
+      <p>Pravidelná i nepravidelná přeprava osob je naše hlavní práce. S firmami, školami a sportovními kluby spolupracujeme dlouhodobě a s kladným hodnocením.</p>
+    </div>
+    <div class="bento">
+      <article class="tile t1">
+        <img src="img/kolona.jpg" alt="Autobusy a mikrobusy JM doprava v koloně" loading="lazy">
+        <h3>Firmy</h3>
+        <p>Pravidelné svozy zaměstnanců na směny i firemní akce. Spolehlivě a podle vašeho rozpisu.</p>
+      </article>
+      <article class="tile t2">
+        <img src="img/autobus-cerveny.jpg" alt="Bílo-červený autobus JM doprava" loading="lazy">
+        <h3>Školy</h3>
+        <p>Výlety, lyžáky, kurzy a exkurze. S řidiči, kteří s dětmi umí.</p>
+      </article>
+      <article class="tile t3">
+        <img src="img/flotila.jpg" alt="Vozový park JM doprava" loading="lazy">
+        <h3>Sportovní kluby</h3>
+        <p>Na zápasy, turnaje i soustředění. Celý tým v jednom autobuse.</p>
+      </article>
+      <article class="tile t4">
+        <div class="cargo">
+          <img src="img/dodavka-autobus.jpg" alt="Dodávka a autobus JM doprava" loading="lazy">
+          <div>
+            <h3>Vozíme i náklad</h3>
+            <p>Kromě lidí převezeme i zboží a materiál, po Česku i v rámci celé EU.</p>
           </div>
         </div>
-        <div class="hero-photo">
-          <img src="img/autobus-jizda.jpg" alt="Zájezdový autobus JM doprava v jízdě" width="800" height="533">
-          <div class="badge"><span class="dot" aria-hidden="true"></span><p><b>Dispečink je na příjmu</b>24 hodin denně, 7 dní v týdnu</p></div>
-        </div>
-      </div>
-
-      <div class="route" aria-label="JM doprava v kostce">
-        <ol class="route-line">
-          <li><strong>20 let</strong><span>v osobní i nákladní dopravě</span></li>
-          <li><strong>15–60 míst</strong><span>mikrobusy i velké autobusy</span></li>
-          <li><strong>Wi-fi zdarma</strong><span>ve vozech pro cestující</span></li>
-          <li><strong>Do 60 minut</strong><span>náhradní vůz při poruše</span></li>
-          <li><strong>Celá EU</strong><span>osoby, zboží i expresní zásilky</span></li>
-        </ol>
-      </div>
+        <a class="btn btn-outline" href="#poptavka">Domluvit přepravu</a>
+      </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section services" id="sluzby">
-    <div class="wrap">
-      <div class="head">
-        <h2>Co pro vás odvezeme</h2>
-        <p>Vnitrostátní i mezinárodní osobní a nákladní doprava je naše hlavní činnost. Spolupracujeme s firmami, školami i sportovními kluby a hodnocení máme kladná.</p>
-      </div>
-      <div class="svc">
-        <article class="card big">
-          <img src="img/kolona.jpg" alt="Autobusy a mikrobusy JM doprava na silnici" loading="lazy" width="800" height="533">
-          <div class="body">
-            <h3>Osobní doprava</h3>
-            <p>Pravidelné linky i jednorázové jízdy pro skupiny od 15 do 60 lidí, kamkoli v rámci EU.</p>
-            <ul>
-              <li>Svozy zaměstnanců na směny</li>
-              <li>Školní výlety, kurzy a exkurze</li>
-              <li>Sportovní kluby na zápasy a turnaje</li>
-            </ul>
-          </div>
-        </article>
-        <article class="card">
-          <img src="img/dodavka-autobus.jpg" alt="Dodávka a autobus JM doprava" loading="lazy" width="800" height="533">
-          <div class="body">
-            <h3>Nákladní doprava</h3>
-            <p>Převezeme zboží a materiál po Česku i v celé Evropské unii.</p>
-          </div>
-        </article>
-        <article class="card">
-          <img src="img/mikrobus.jpg" alt="Mikrobus JM doprava" loading="lazy" width="800" height="533">
-          <div class="body">
-            <h3>Expresní zásilky</h3>
-            <p>Když to spěchá: expresní přeprava zásilek 24 hodin denně.</p>
-          </div>
-        </article>
-      </div>
-      <p class="price-note"><b>Ceny jsou smluvní.</b> Řekněte nám trasu, termín a počet lidí a připravíme nabídku na míru.</p>
-    </div>
-  </section>
-
-  <section class="section promise" id="proc-my">
-    <div class="wrap promise-grid">
+<!-- ============ ZÁRUKY ============ -->
+<section class="sec promise" id="zaruky">
+  <div class="wrap">
+    <div class="promise-top">
+      <p class="big-claim">Porucha? Do <em>60 minut</em> u vás stojí jiný autobus.</p>
       <div>
-        <h2>Na čem si dáváme záležet</h2>
-        <p class="claim">Když se vůz porouchá, do 60 minut u vás stojí náhradní.</p>
-        <p class="claim-sub">Zálohové vozidlo máme připravené 24 hodin denně, i pro nenadálé situace na cestě. Každé auto má navíc firemní mobil, takže řidič je pořád na telefonu.</p>
-      </div>
-      <div class="groups">
-        <div class="group">
-          <h3>Řidiči</h3>
-          <ul>
-            <li>Dlouholetá praxe za volantem</li>
-            <li>Profesní průkazy, psychologické testy a zdravotní prohlídky</li>
-            <li>Vstřícní k cestujícím a jejich požadavkům</li>
-          </ul>
-        </div>
-        <div class="group">
-          <h3>Vozidla</h3>
-          <ul>
-            <li>Pravidelná údržba ve značkovém servisu</li>
-            <li>Wi-fi zdarma pro cestující</li>
-            <li>Pohodlné a bezpečné cestování</li>
-          </ul>
-        </div>
-        <div class="group">
-          <h3>Pojištění</h3>
-          <ul>
-            <li>Řádné pojištění všech vozidel</li>
-            <li>Nadstandardní pojištění každého sedadla</li>
-          </ul>
-        </div>
-        <div class="group">
-          <h3>Přístup</h3>
-          <ul>
-            <li>Spolehlivost a odpovědnost na každé jízdě</li>
-            <li>Dispečink dostupný nonstop</li>
-          </ul>
-        </div>
+        <p>Zálohové vozidlo máme připravené 24 hodin denně, pro poruchy i nenadálé situace na cestě. Náhradní vůz přistavíme do 60 minut od nahlášení. To je naše garance.</p>
+        <p>Každý vůz má navíc firemní mobil, takže s řidičem jste pořád ve spojení.</p>
       </div>
     </div>
-  </section>
-
-  <section class="section" id="vozy">
-    <div class="wrap">
-      <div class="head">
-        <h2>Naše vozy</h2>
-        <p>Od dodávek a mikrobusů až po velké zájezdové autobusy. Kliknutím fotku zvětšíte.</p>
-      </div>
-      <div class="gallery">
-        <button class="g1" data-src="img/flotila.jpg"><img src="img/flotila.jpg" alt="Celý vozový park JM doprava – autobusy, mikrobus a dodávky" loading="lazy"></button>
-        <button class="g2" data-src="img/interier.jpg"><img src="img/interier.jpg" alt="Interiér autobusu s polstrovanými sedadly" loading="lazy"></button>
-        <button class="g3" data-src="img/autobus-cerveny.jpg"><img src="img/autobus-cerveny.jpg" alt="Linkový autobus v bílo-červeném" loading="lazy"></button>
-        <button class="g4" data-src="img/mikrobus.jpg"><img src="img/mikrobus.jpg" alt="Mikrobus Renault Master" loading="lazy"></button>
-        <button class="g5" data-src="img/dodavka-autobus.jpg"><img src="img/dodavka-autobus.jpg" alt="Dodávka a autobus na silnici" loading="lazy"></button>
-        <button class="g6" data-src="img/kolona.jpg"><img src="img/kolona.jpg" alt="Kolona autobusů a dodávek" loading="lazy"></button>
-        <button class="g7" data-src="img/kancelar.jpg"><img src="img/kancelar.jpg" alt="Kancelář a dispečink JM doprava" loading="lazy"></button>
-      </div>
-    </div>
-  </section>
-
-  <section class="section ev" id="elektromobilita">
-    <div class="wrap ev-grid">
-      <div class="ev-photo">
-        <img src="img/elektromobil.jpg" alt="Elektromobil Hyundai Kona EV společnosti JM doprava" loading="lazy" width="800" height="533">
-        <div class="odo"><b>160 000 km</b><span>bez jediného servisního zásahu</span></div>
+    <div class="guar">
+      <div>
+        <h3>Řidiči</h3>
+        <ul>
+          <li>Dlouholetá praxe za volantem</li>
+          <li>Profesní průkazy, psychotesty, zdravotní prohlídky</li>
+          <li>Vstřícní k cestujícím a jejich přáním</li>
+        </ul>
       </div>
       <div>
+        <h3>Vozy</h3>
+        <ul>
+          <li>Pravidelná údržba ve značkovém servisu</li>
+          <li>Wi-fi zdarma pro cestující</li>
+          <li>Pohodlné a bezpečné cestování</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Pojištění</h3>
+        <ul>
+          <li>Řádné pojištění všech vozidel</li>
+          <li>Nadstandardní pojištění každého sedadla</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Ceny</h3>
+        <ul>
+          <li>Smluvní, podle trasy a termínu</li>
+          <li>Nabídku připravíme na míru</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KOLIK VÁS JEDE ============ -->
+<section class="sec seats-sec" id="kolik">
+  <div class="wrap seats-grid">
+    <div>
+      <h2>Kolik vás jede?</h2>
+      <div class="count" aria-live="polite"><span id="num">30</span><small>osob</small></div>
+      <div class="vehicle" id="veh">Pojedete autobusem</div>
+      <label class="sr" for="pax">Počet cestujících</label>
+      <input type="range" id="pax" min="15" max="60" value="30" step="1">
+      <div class="range-scale"><span>15</span><span>30</span><span>45</span><span>60</span></div>
+      <a class="btn btn-dark" id="pax-cta" href="#poptavka">Domluvit dopravu pro 30 osob</a>
+    </div>
+    <div>
+      <div class="bus" aria-hidden="true">
+        <div class="seatmap" id="seatmap"></div>
+        <span class="door"></span>
+      </div>
+      <div class="legend"><span><i></i>obsazeno vaší skupinou</span><span><i class="off"></i>volné místo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VOZY ============ -->
+<section class="sec" id="vozy">
+  <div class="wrap fleet-head">
+    <h2>Naše vozy</h2>
+    <div class="arrows">
+      <button type="button" id="prev" aria-label="Předchozí fotka"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button type="button" id="next" aria-label="Další fotka"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+  <div class="rail" id="rail">
+    <figure class="slide"><button type="button" data-src="img/flotila.jpg"><img src="img/flotila.jpg" alt="Celý vozový park – autobusy, mikrobus a dodávky" loading="lazy"></button><figcaption><b>Celá flotila</b><span>od dodávek po velké autobusy</span></figcaption></figure>
+    <figure class="slide"><button type="button" data-src="img/interier.jpg"><img src="img/interier.jpg" alt="Interiér autobusu s polstrovanými sedadly a závěsy" loading="lazy"></button><figcaption><b>Uvnitř</b><span>polstrovaná sedadla a wi-fi</span></figcaption></figure>
+    <figure class="slide"><button type="button" data-src="img/autobus-jizda.jpg"><img src="img/autobus-jizda.jpg" alt="Zájezdový autobus v jízdě" loading="lazy"></button><figcaption><b>Zájezdový autobus</b><span>na delší trasy po EU</span></figcaption></figure>
+    <figure class="slide"><button type="button" data-src="img/mikrobus.jpg"><img src="img/mikrobus.jpg" alt="Mikrobus Renault Master" loading="lazy"></button><figcaption><b>Mikrobus</b><span>pro menší skupiny</span></figcaption></figure>
+    <figure class="slide"><button type="button" data-src="img/autobus-cerveny.jpg"><img src="img/autobus-cerveny.jpg" alt="Bílo-červený autobus" loading="lazy"></button><figcaption><b>Linkový autobus</b><span>na pravidelné svozy</span></figcaption></figure>
+    <figure class="slide"><button type="button" data-src="img/kancelar.jpg"><img src="img/kancelar.jpg" alt="Kancelář a dispečink JM doprava v Mostě" loading="lazy"></button><figcaption><b>Dispečink</b><span>Dělnická 209, Most</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ ELEKTROMOBILITA ============ -->
+<section class="ev" id="elektromobilita">
+  <div class="wrap">
+    <div class="ev-card">
+      <div class="pic">
+        <img src="img/elektromobil.jpg" alt="Elektromobil Hyundai Kona EV společnosti JM doprava" loading="lazy">
+        <div class="odo" aria-label="160 000 kilometrů"><span>1</span><span>6</span><span>0</span><span>0</span><span>0</span><span>0</span><em>km</em></div>
+      </div>
+      <div class="txt">
         <h2>Jezdíme i na elektřinu</h2>
-        <p>V roce 2019 jsme do firmy pořídili elektromobil Hyundai Kona EV. Řídí se příjemně, nemusí se řadit a je velmi tichý. Zaměstnanci jsou s ním spokojení.</p>
-        <p>Provoz se vyplácí i ekonomicky: odpadají drahé servisní prohlídky a i po zdražení elektřiny vychází levněji než auta na benzin či naftu. Ekologický provoz je pro nás důležitý i jako pro zaměstnavatele.</p>
+        <p>Od roku 2019 máme ve firmě elektromobil Hyundai Kona EV. Najel 160 000 km bez jediného servisního zásahu nebo poruchy. Je tichý, nemusí se řadit a řidiči ho mají rádi.</p>
+        <p>Vyplácí se i ekonomicky a ekologický provoz je pro nás důležitý i jako pro zaměstnavatele.</p>
         <details>
-          <summary>Informace o projektu z programu OP PIK</summary>
+          <summary>Projekt podpořený z programu OP PIK</summary>
           <dl>
             <dt>Projekt</dt><dd>Elektromobilita – JM doprava s.r.o.</dd>
-            <dt>Program</dt><dd>Operační program podnikání a inovace pro konkurenceschopnost, program podpory Nízkouhlíkové technologie, Výzva IV. – Elektromobilita</dd>
-            <dt>Žadatel</dt><dd>JM doprava s.r.o.</dd>
+            <dt>Program</dt><dd>OP Podnikání a inovace pro konkurenceschopnost, program Nízkouhlíkové technologie, Výzva IV. – Elektromobilita</dd>
             <dt>Realizace</dt><dd>30. 4. 2019 – 27. 12. 2019, Ústecký kraj</dd>
-            <dt>Způsobilé výdaje</dt><dd>Pořízení 1 ks elektromobilu kategorie M1 – 979 338,84 Kč</dd>
+            <dt>Způsobilé výdaje</dt><dd>1 elektromobil kategorie M1 – 979 338,84 Kč</dd>
             <dt>Dotace</dt><dd>330 526,86 Kč</dd>
-            <dt>Popis</dt><dd>Projekt zavedl do činnosti podniku inovativní technologii čisté mobility (TRL 9). Byl pořízen 1 elektromobil (BEV) pro vlastní potřebu.</dd>
+            <dt>Popis</dt><dd>Zavedení inovativní technologie čisté mobility (TRL 9), pořízení 1 elektromobilu (BEV) pro vlastní potřebu.</dd>
           </dl>
         </details>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section" id="kontakt">
-    <div class="wrap contact-grid">
-      <div id="poptavka">
-        <h2>Poptejte dopravu</h2>
-        <ol class="steps">
-          <li><b>Napíšete nebo zavoláte</b>trasu, termín a počet lidí</li>
-          <li><b>Pošleme nabídku</b>se smluvní cenou</li>
-          <li><b>Vyrazíme</b>s ověřeným řidičem</li>
-        </ol>
-        <form id="form" novalidate>
-          <label>Odkud<input name="odkud" placeholder="např. Most" required></label>
-          <label>Kam<input name="kam" placeholder="např. Praha, letiště" required></label>
-          <label>Datum<input name="datum" type="date"></label>
-          <label>Co vezeme
-            <select name="typ">
-              <option>15–20 osob</option>
-              <option>21–30 osob</option>
-              <option>31–45 osob</option>
-              <option>46–60 osob</option>
-              <option>Pravidelný svoz zaměstnanců</option>
-              <option>Náklad / materiál</option>
-              <option>Expresní zásilka</option>
-            </select>
-          </label>
-          <label>Jméno nebo firma<input name="jmeno" autocomplete="name" required></label>
-          <label>Telefon<input name="telefon" type="tel" autocomplete="tel" required></label>
-          <label class="full">Poznámka<textarea name="pozn" placeholder="Zpáteční cesta, čekání na místě, zavazadla…"></textarea></label>
-          <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Odeslat poptávku</button>
-            <small>Ozveme se co nejdřív, dispečink je na příjmu nonstop.</small>
-          </div>
-          <div class="result" id="result" role="status" aria-live="polite"></div>
-        </form>
-      </div>
+<!-- ============ POPTÁVKA ============ -->
+<section class="order" id="poptavka">
+  <div class="wrap order-grid">
+    <div>
+      <h2>Kam to bude?</h2>
+      <p class="intro">Zavolejte nebo napište, kam a kdy potřebujete jet. Pošleme vám nabídku se smluvní cenou. Dispečink je na příjmu ve dne i v noci.</p>
+      <ol class="steps">
+        <li><div><b>Ozvete se nám</b>telefonem nebo e-mailem</div></li>
+        <li><div><b>Dostanete nabídku</b>se smluvní cenou na míru</div></li>
+        <li><div><b>Vyrazíte</b>s ověřeným řidičem a pojištěnými sedadly</div></li>
+      </ol>
 
-      <aside class="contact-card">
-        <span class="open-now"><i aria-hidden="true"></i>Otevřeno nonstop</span>
-        <h3>JM doprava s.r.o.</h3>
-        <a class="phone" href="tel:+420608694190">+420 608 694 190</a>
-        <a class="mail" href="mailto:jmdopravamost@seznam.cz">jmdopravamost@seznam.cz</a>
-        <dl>
-          <dt>Adresa</dt><dd>Dělnická 209<br>434 01 Most</dd>
-          <dt>Úřední hodiny</dt><dd>Po–Ne, 0:00–24:00</dd>
-          <dt>IČO</dt><dd>04628217</dd>
-          <dt>DIČ</dt><dd>CZ04628217</dd>
-        </dl>
-        <a class="map" href="https://mapy.cz/?q=D%C4%9Blnick%C3%A1%20209%2C%20Most" target="_blank" rel="noopener">Ukázat na mapě</a>
-      </aside>
     </div>
-  </section>
+
+    <div class="reach">
+      <span class="open dark"><i aria-hidden="true"></i>Dispečink je na příjmu nonstop</span>
+      <p class="reach-label">Zavolejte</p>
+      <a class="reach-tel" href="tel:+420608694190">+420 608 694 190</a>
+      <p class="reach-label">nebo napište</p>
+      <a class="reach-mail" href="mailto:jmdopravamost@seznam.cz?subject=Popt%C3%A1vka%20dopravy">jmdopravamost@seznam.cz</a>
+      <div class="reach-tip">
+        <b>Co nám říct</b>
+        <ul>
+          <li>Odkud a kam pojedete</li>
+          <li>Datum a čas odjezdu</li>
+          <li>Kolik vás pojede</li>
+          <li>Jednosměrně, tam a zpět, nebo pravidelně</li>
+        </ul>
+      </div>
+      <div class="reach-btns">
+        <a class="btn btn-dark" href="tel:+420608694190">Zavolat</a>
+        <a class="btn btn-outline" href="mailto:jmdopravamost@seznam.cz?subject=Popt%C3%A1vka%20dopravy">Napsat e-mail</a>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer>
+<!-- ============ PATIČKA ============ -->
+<footer id="kontakt">
   <div class="wrap">
-    <span>© <span id="y">2026</span> JM doprava s.r.o., Dělnická 209, Most</span>
-    <span>Projekt Elektromobilita byl spolufinancován Evropskou unií z programu OP PIK.</span>
+    <div class="foot-top">
+      <div>
+        <img src="img/logo-bila.png" alt="JM doprava" width="817" height="324" loading="lazy">
+        <p>Autobusová doprava pro firmy, školy a sportovní kluby. Most a celá EU.</p>
+        <span class="open"><i aria-hidden="true"></i>Otevřeno nonstop</span>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <p><a href="tel:+420608694190">+420 608 694 190</a><br><a href="mailto:jmdopravamost@seznam.cz">jmdopravamost@seznam.cz</a></p>
+      </div>
+      <div>
+        <h4>Adresa</h4>
+        <p>JM doprava s.r.o.<br>Dělnická 209<br>434 01 Most<br><a href="https://mapy.cz/?q=D%C4%9Blnick%C3%A1%20209%2C%20Most" target="_blank" rel="noopener">Ukázat na mapě</a></p>
+      </div>
+      <div>
+        <h4>Firma</h4>
+        <p>IČO: 04628217<br>DIČ: CZ04628217<br>Úřední hodiny: Po–Ne 0–24</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="y">2026</span> JM doprava s.r.o.</span>
+      <span>Projekt Elektromobilita byl spolufinancován Evropskou unií z programu OP PIK.</span>
+    </div>
   </div>
 </footer>
 
-<div class="lightbox" id="lb" role="dialog" aria-modal="true" aria-label="Zvětšená fotografie">
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Zvětšená fotografie">
   <button type="button" id="lb-close">Zavřít</button>
   <img alt="">
 </div>
 
 <script>
 (function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.getElementById('y').textContent = new Date().getFullYear();
 
-  // Menu na mobilu
-  var btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
-  btn.addEventListener('click', function(){
-    var o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o);
-  });
-  nav.addEventListener('click', function(e){ if(e.target.tagName==='A'){ nav.classList.remove('open'); btn.setAttribute('aria-expanded', false);} });
+  /* ---------- navigace ---------- */
+  var nav = document.getElementById('nav'), links = document.getElementById('links'), burger = document.querySelector('.burger');
+  function onScroll(){ nav.classList.toggle('solid', window.scrollY > window.innerHeight * 0.55 || links.classList.contains('open')); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  burger.addEventListener('click', function(){ var o = links.classList.toggle('open'); burger.setAttribute('aria-expanded', o); onScroll(); });
+  links.addEventListener('click', function(e){ if(e.target.tagName === 'A'){ links.classList.remove('open'); burger.setAttribute('aria-expanded', false); onScroll(); } });
 
-  // Galerie
-  var lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), closeBtn = document.getElementById('lb-close'), last;
-  document.querySelectorAll('.gallery button').forEach(function(b){
-    b.addEventListener('click', function(){
-      last = b; lbImg.src = b.dataset.src; lbImg.alt = b.querySelector('img').alt;
-      lb.classList.add('open'); closeBtn.focus();
+  /* ---------- split-flap tabule ---------- */
+  var dests = ['NA ZÁPAS','DO PRÁCE','NA VÝLET','NA HORY','DO PRAHY','K MOŘI','DO VÍDNĚ','NA LYŽÁK','DO BERLÍNA','NA LETIŠTĚ'];
+  var N = 10, chars = 'ABCDEFGHIJKLMNOPRSTUVZÁÉÍŘŠŽĚ', board = document.getElementById('board'), tiles = [];
+  for(var i=0;i<N;i++){ var f=document.createElement('span'); f.className='flap'; f.innerHTML='<span></span>'; board.appendChild(f); tiles.push(f); }
+  function setTile(t, ch){
+    var s = t.firstChild; s.textContent = ch === ' ' ? '' : ch;
+    t.classList.toggle('blank', ch === ' ');
+    t.classList.remove('tick'); void t.offsetWidth; t.classList.add('tick');
+  }
+  function show(word, instant){
+    var w = word.padEnd(N,' ').slice(0,N);
+    tiles.forEach(function(t, idx){
+      var target = w[idx];
+      t.classList.toggle('accent', false);
+      if(instant || reduce){ setTile(t, target); return; }
+      var steps = 4 + idx + Math.floor(Math.random()*3), n = 0;
+      (function step(){
+        if(n++ >= steps){ setTile(t, target); return; }
+        setTile(t, target === ' ' && n > steps-2 ? ' ' : chars[Math.floor(Math.random()*chars.length)]);
+        setTimeout(step, 55);
+      })();
     });
-  });
-  function close(){ lb.classList.remove('open'); if(last) last.focus(); }
-  closeBtn.addEventListener('click', close);
-  lb.addEventListener('click', function(e){ if(e.target===lb) close(); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && lb.classList.contains('open')) close(); });
+  }
+  var di = 0; show(dests[0], reduce);
+  if(!reduce){ setInterval(function(){ if(document.hidden) return; di = (di+1) % dests.length; show(dests[di]); }, 3200); }
 
-  // Poptávka -> e-mail
-  var form = document.getElementById('form'), result = document.getElementById('result');
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var d = new FormData(form), missing = [];
-    ['odkud','kam','jmeno','telefon'].forEach(function(k){ if(!String(d.get(k)||'').trim()) missing.push(k); });
-    if(missing.length){
-      result.innerHTML = '<b>Doplňte prosím odkud, kam, jméno a telefon.</b> Bez nich vám nemůžeme poslat nabídku.';
-      result.classList.add('show');
-      form.querySelector('[name="'+missing[0]+'"]').focus();
-      return;
+  /* ---------- kolik vás jede ---------- */
+  var map = document.getElementById('seatmap'), seats = [];
+  // 15 řad × 4 sedadla, sloupce jdou od řidiče dozadu
+  for(var c=0;c<15;c++){
+    for(var r=0;r<5;r++){
+      var d = document.createElement('span');
+      if(r===2){ d.className='aisle'; }
+      else { d.className='seat'; seats.push(d); }
+      map.appendChild(d);
     }
-    var datum = d.get('datum') ? new Date(d.get('datum')).toLocaleDateString('cs-CZ') : 'dle dohody';
-    var text = 'Poptávka dopravy\n\nOdkud: '+d.get('odkud')+'\nKam: '+d.get('kam')+'\nDatum: '+datum+
-      '\nCo vezeme: '+d.get('typ')+'\nJméno / firma: '+d.get('jmeno')+'\nTelefon: '+d.get('telefon')+
-      (String(d.get('pozn')||'').trim() ? '\nPoznámka: '+d.get('pozn') : '');
-    var mail = 'mailto:jmdopravamost@seznam.cz?subject='+encodeURIComponent('Poptávka dopravy – '+d.get('odkud')+' → '+d.get('kam'))+'&body='+encodeURIComponent(text);
-    result.innerHTML = '<b>Poptávka je připravená.</b> Otevřete ji v e-mailu, nebo ji zkopírujte a pošlete na jmdopravamost@seznam.cz.'+
-      '<pre></pre><div class="row"><a class="btn btn-primary" href="'+mail+'">Otevřít v e-mailu</a><button type="button" class="btn btn-ghost" id="copy">Zkopírovat text</button></div>';
-    result.querySelector('pre').textContent = text;
-    result.classList.add('show');
-    document.getElementById('copy').addEventListener('click', function(){
-      var c = this;
-      try{ navigator.clipboard.writeText(text).then(function(){ c.textContent='Zkopírováno'; }, function(){ c.textContent='Kopírování se nepovedlo'; }); }
-      catch(err){ c.textContent='Kopírování se nepovedlo'; }
-    });
+  }
+  var pax = document.getElementById('pax'), num = document.getElementById('num'), veh = document.getElementById('veh'), cta = document.getElementById('pax-cta');
+  function setPax(v){
+    v = Math.max(15, Math.min(60, +v || 15));
+    pax.value = v; num.textContent = v;
+    pax.style.setProperty('--p', ((v-15)/45*100)+'%');
+    seats.forEach(function(s,i){ s.classList.toggle('on', i < v); });
+    veh.textContent = v <= 20 ? 'Stačí vám mikrobus' : (v <= 45 ? 'Pojedete autobusem' : 'Velký zájezdový autobus');
+    cta.textContent = 'Domluvit dopravu pro ' + v + ' osob';
+  }
+  pax.addEventListener('input', function(){ setPax(pax.value); });
+  setPax(30);
+
+  /* ---------- galerie ---------- */
+  var rail = document.getElementById('rail');
+  function slideBy(dir){ var s = rail.querySelector('.slide'); rail.scrollBy({left: dir * (s.offsetWidth + 18), behavior: reduce ? 'auto' : 'smooth'}); }
+  document.getElementById('prev').addEventListener('click', function(){ slideBy(-1); });
+  document.getElementById('next').addEventListener('click', function(){ slideBy(1); });
+  var lb = document.getElementById('lb'), lbImg = lb.querySelector('img'), lbClose = document.getElementById('lb-close'), last;
+  rail.querySelectorAll('.slide button').forEach(function(b){
+    b.addEventListener('click', function(){ last=b; lbImg.src=b.dataset.src; lbImg.alt=b.querySelector('img').alt; lb.classList.add('open'); lbClose.focus(); });
   });
+  function closeLb(){ lb.classList.remove('open'); if(last) last.focus(); }
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', function(e){ if(e.target===lb) closeLb(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && lb.classList.contains('open')) closeLb(); });
+
 })();
 </script>
 </body>
